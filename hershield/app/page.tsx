@@ -2,9 +2,11 @@
 import { use } from "react";
 import "./globals.css";
 
+import { useRouter } from "next/navigation";
+import { Router } from "next/router";
 
 export default function Home() {
-
+ const router = useRouter();
   return (
 
     <main className="landingPage">
@@ -66,12 +68,12 @@ export default function Home() {
           <div className="heroButtons">
 
             <button className="primaryButton"
-            onClick={() => window.location.href = '/report'}>
+           onClick={() => router.push('/report')}>
               Get Help Now
             </button>
 
             <button className="secondaryButton"
-            onClick={() => window.location.href = '/chat'}>
+            onClick={() => router.push('/chat')}>
               Emergency Support
             </button>
 

@@ -24,6 +24,16 @@ model Case {
   messages      Message[]
   ngosAlerted   NgoAlert[]
 }
+model Report {
+  id          String   @id @default(cuid())
+  type        String
+  date        String?
+  location    String?
+  description String
+  anonymous   Boolean  @default(true)
+  contact     String?
+  createdAt   DateTime @default(now())
+}
 
 model Message {
   id        String   @id @default(cuid())

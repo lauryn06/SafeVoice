@@ -537,3 +537,124 @@ body{
   }
 
 }
+/* PAGE BACKGROUND */
+.landing {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top, #1a1a2e, #0f0f1a);
+  padding: 20px;
+}
+
+/* MAIN CARD */
+.card {
+  width: 100%;
+  max-width: 520px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  padding: 28px;
+  color: white;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+/* TITLE */
+.card h1, .card h2 {
+  margin-bottom: 10px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* LOGO */
+.logo {
+  font-size: 14px;
+  opacity: 0.8;
+  margin-bottom: 10px;
+}
+
+/* INPUTS */
+.input {
+  width: 100%;
+  padding: 14px;
+  margin-top: 8px;
+  margin-bottom: 14px;
+
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+
+  font-size: 14px;
+
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.input:focus {
+  border-color: #8b7cf6;
+  box-shadow: 0 0 0 3px rgba(139, 124, 246, 0.2);
+}
+
+/* LABELS */
+label {
+  font-size: 12px;
+  opacity: 0.75;
+  margin-top: 10px;
+  display: block;
+}
+
+/* BUTTON */
+.helpBtn {
+  width: 100%;
+  padding: 14px;
+
+  background: linear-gradient(135deg, #7c3aed, #5b21b6);
+  color: white;
+
+  border: none;
+  border-radius: 12px;
+
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+  margin-top: 10px;
+}
+
+.helpBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(124, 58, 237, 0.4);
+}
+
+/* BADGES */
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.badges span {
+  font-size: 11px;
+  padding: 6px 10px;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* EMERGENCY TEXT */
+.emergency {
+  margin-top: 14px;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* CHECKBOX */
+input[type="checkbox"] {
+  transform: scale(1.1);
+  margin-right: 6px;
+}
