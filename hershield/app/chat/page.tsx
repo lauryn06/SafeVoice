@@ -1,7 +1,8 @@
 "use client";
-
+import { AudioLines } from "lucide-react";
 import { useState } from "react";
 import "../globals.css";
+import { Shield } from "lucide-react";
 
 export default function ChatPage() {
 
@@ -125,10 +126,14 @@ if(data.dangerLevel === "HIGH"){
       {/* HEADER */}
 
       <header className="chatHeader">
+  <div className="logoSection">
 
-        <div>
+          <div className="logoCircle">
+            <Shield size={28} />
+
+        </div>
           <h1>HerShield AI</h1>
-          <p>Private & Secure Support</p>
+        
         </div>
 
         <button className="safeExit">
@@ -172,7 +177,7 @@ if(data.dangerLevel === "HIGH"){
   className="micButton"
   onClick={startVoiceRecognition}
 >
-  🎤
+  <AudioLines size={18} />
 </button>
 
 <button onClick={sendMessage}>

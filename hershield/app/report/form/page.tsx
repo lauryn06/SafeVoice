@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { AlertTriangle } from "lucide-react";
+import { Shield } from "lucide-react";
 
 export default function ReportFormPage() {
   const [anonymous, setAnonymous] = useState(true);
@@ -8,8 +10,16 @@ export default function ReportFormPage() {
   return (
     <div className="landing">
       <div className="card" style={{ maxWidth: "600px" }}>
+ <div className="logoSection">
 
-        <div className="logo">📝 Incident Report</div>
+          <div className="logoCircle">
+            <Shield size={28} />
+
+        </div>
+          <h1>HerShield </h1>
+        
+        </div>
+        <div className="logo"><AlertTriangle size={16} /> Incident Report</div>
 
         <h2>Tell us what happened</h2>
 

@@ -1,6 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { Building2, Lock } from "lucide-react";
+import { Zap } from "lucide-react";
+import { Shield } from "lucide-react";
+
 
 export default function ReportPage() {
   const router = useRouter();
@@ -9,7 +13,15 @@ export default function ReportPage() {
     <div className="landing">
       <div className="card">
 
-        <div className="logo">🛡️ HerShield AI</div>
+   <div className="logoSection">
+
+          <div className="logoCircle">
+            <Shield size={28} />
+
+        </div>
+          <h1>HerShield </h1>
+        
+        </div>
 
         <h1>You are safe here.</h1>
 
@@ -19,9 +31,9 @@ export default function ReportPage() {
         </p>
 
         <div className="badges">
-          <span>🔒 Anonymous reporting</span>
-          <span>⚡ Fast response routing</span>
-          <span>🤝 NGO + emergency support</span>
+          <span><Lock size={18} /> Anonymous reporting</span>
+          <span><Zap size={18} /> Fast response routing</span>
+          <span><Building2 size={18} /> NGO + emergency support</span>
         </div>
 
         <div style={{ marginTop: "20px" }}>

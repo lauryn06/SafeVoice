@@ -1,9 +1,12 @@
 "use client";
 import { use } from "react";
 import "./globals.css";
-
+import { Mic } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Router } from "next/router";
+import { Bot } from "lucide-react";
+import { Shield } from "lucide-react";
+import { Building2 } from "lucide-react";
 
 export default function Home() {
  const router = useRouter();
@@ -23,10 +26,10 @@ export default function Home() {
         <div className="logoSection">
 
           <div className="logoCircle">
-            💜
+            <Shield size={28} />
           </div>
 
-          <h2>HerShield AI</h2>
+          <h2>HerShield </h2>
 
         </div>
 
@@ -84,15 +87,15 @@ export default function Home() {
           <div className="features">
 
             <div className="featureCard">
-              🎙️ Voice Reporting
+              <Mic size={18} /> Voice Reporting
             </div>
 
             <div className="featureCard">
-              🤖 AI Risk Detection
+              <Bot size={18} /> AI Risk Detection
             </div>
 
             <div className="featureCard">
-              📨 NGO Alerts
+              <Building2 size={18} /> NGO Alerts
             </div>
 
           </div>
