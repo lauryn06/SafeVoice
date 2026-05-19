@@ -1,66 +1,145 @@
+"use client";
+import { use } from "react";
 import "./globals.css";
 
+
 export default function Home() {
+
   return (
-    <main className="hero">
 
-      {/* Dark Overlay */}
-      <div className="overlay">
+    <main className="landingPage">
 
-        {/* Main Card */}
-        <section className="card">
+      {/* BACKGROUND GLOW */}
 
-          {/* Logo */}
-          <div className="logo">
+      <div className="backgroundGlowOne"></div>
+      <div className="backgroundGlowTwo"></div>
+
+      {/* NAVBAR */}
+
+      <nav className="navbar">
+
+        <div className="logoSection">
+
+          <div className="logoCircle">
             💜
           </div>
 
-          {/* Heading */}
-          <h1 className="title">
-            HerShield AI
+          <h2>HerShield AI</h2>
+
+        </div>
+
+        <button className="navButton">
+          Safe Exit
+        </button>
+
+      </nav>
+
+      {/* HERO SECTION */}
+
+      <section className="heroSection">
+
+        {/* LEFT SIDE */}
+
+        <div className="heroContent">
+
+          <span className="badge">
+            AI-Powered Protection For Girls
+          </span>
+
+          <h1 className="heroTitle">
+            Your Voice Matters.
+            <br />
+            Your Safety Matters More.
           </h1>
 
-          {/* Description */}
-          <p className="description">
-            A safe AI-powered support platform helping girls facing
-            gender-based violence connect with trusted NGOs,
-            emergency support, and real assistance.
+          <p className="heroDescription">
+
+            HerShield AI helps girls experiencing
+            gender-based violence report abuse safely,
+            speak anonymously, and connect instantly
+            with trusted NGOs and emergency support.
+
           </p>
 
-          {/* Buttons */}
-          <div className="buttons">
+          {/* BUTTONS */}
 
-            <button className="primaryBtn">
-              I Need Help
+          <div className="heroButtons">
+
+            <button className="primaryButton"
+            onClick={() => window.location.href = '/report'}>
+              Get Help Now
             </button>
 
-            <button className="secondaryBtn">
+            <button className="secondaryButton"
+            onClick={() => window.location.href = '/chat'}>
               Emergency Support
             </button>
 
-            <button className="secondaryBtn">
-              Learn About GBV
-            </button>
+          </div>
+
+          {/* FEATURES */}
+
+          <div className="features">
+
+            <div className="featureCard">
+              🎙️ Voice Reporting
+            </div>
+
+            <div className="featureCard">
+              🤖 AI Risk Detection
+            </div>
+
+            <div className="featureCard">
+              📨 NGO Alerts
+            </div>
 
           </div>
 
-          {/* Privacy Box */}
-          <div className="privacyBox">
-            <p>
-              🔒 Your conversations are private and secure.
-              You may stay anonymous while getting help.
-            </p>
+        </div>
+
+        {/* RIGHT SIDE */}
+
+        <div className="heroImageSection">
+
+          <div className="phoneMockup">
+
+            <div className="phoneTop"></div>
+
+            <div className="chatScreen">
+
+              <div className="aiBubble">
+                Hello 💜 Are you safe right now?
+              </div>
+
+              <div className="userBubble">
+                I need help...
+              </div>
+
+              <div className="aiBubble">
+                I'm here for you.
+                Help resources are being prepared.
+              </div>
+
+            </div>
+
           </div>
 
-          {/* Footer */}
-          <footer className="footer">
-            Powered by AI • Connected to Verified NGOs
-          </footer>
+        </div>
 
-        </section>
+      </section>
 
-      </div>
+      {/* FOOTER */}
+
+      <footer className="footer">
+
+        <p>
+          Anonymous • Secure • AI Powered • Connected To Trusted NGOs
+        </p>
+
+      </footer>
 
     </main>
+
   );
+
 }

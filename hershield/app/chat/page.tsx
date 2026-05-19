@@ -5,6 +5,36 @@ import "../globals.css";
 
 export default function ChatPage() {
 
+const startVoiceRecognition = () => {
+
+  const SpeechRecognition =
+      (window as any).SpeechRecognition ||
+    (window as any).webkitSpeechRecognition;
+
+  if (!SpeechRecognition) {
+
+    alert("Speech Recognition not supported");
+
+    return;
+  }
+
+  const recognition = new SpeechRecognition();
+
+  recognition.lang = "en-US";
+
+  recognition.start();
+
+  recognition.onresult = (event: any) => {
+
+    const transcript =
+      event.results[0][0].transcript;
+
+    setInput(transcript);
+
+  };
+
+};
+
   const [messages, setMessages] = useState([
     {
       sender: "ai",
@@ -47,23 +77,9 @@ export default function ChatPage() {
 
       const data = await response.json();
       // Danger Detection
+console.log(data.dangerLevel);
 
-const dangerWords = [
-  "bleeding",
-  "rape",
-  "kill",
-  "abuse",
-  "beating",
-  "hurt",
-  "attack",
-  "unsafe"
-];
-
-const isDanger = dangerWords.some(word =>
-  currentInput.toLowerCase().includes(word)
-);
-
-if(isDanger){
+if(data.dangerLevel === "HIGH"){
 
   await fetch("/api/alert", {
 
@@ -77,9 +93,9 @@ if(isDanger){
 
       message: currentInput,
 
-      location: "Unknown",
+      location:"Unknown",
 
-      dangerLevel: "HIGH"
+      dangerLevel:data.dangerLevel
 
     })
 
@@ -152,10 +168,18 @@ if(isDanger){
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
+<button
+  className="micButton"
+  onClick={startVoiceRecognition}
+>
+  🎤
+</button>
 
-        <button onClick={sendMessage}>
-          Send
-        </button>
+<button onClick={sendMessage}>
+  Send
+</button>
+
+
 
       </section>
 

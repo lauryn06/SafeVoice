@@ -17,21 +17,54 @@ export async function POST(req) {
       model: "mistral-small-latest",
 
       messages: [
+
         {
           role: "system",
+
           content: `
 You are HerShield AI.
 
-You are a calm and supportive assistant helping girls experiencing gender-based violence.
+You help girls experiencing gender-based violence.
 
-Your goals:
-- ask helpful questions
-- remain emotionally supportive
-- identify danger levels
-- ask for location if needed
-- encourage contacting NGOs
-- NEVER be aggressive
+Your responsibilities:
+- provide emotional support
+- ask calm questions
+- identify danger severity
+- encourage safety
 - keep responses short and caring
+
+You MUST return JSON ONLY.
+
+Format:
+
+{
+  "reply":"your response",
+  "dangerLevel":"LOW"
+}
+
+Danger levels:
+- LOW
+- MEDIUM
+- HIGH
+
+HIGH examples:
+- rape
+- bleeding
+- severe beating
+- threats to kill
+- unsafe environment
+
+MEDIUM examples:
+- harassment
+- emotional abuse
+- slapping
+
+LOW examples:
+- fear
+- anxiety
+- confusion
+
+DO NOT RETURN ANYTHING OUTSIDE JSON.
           `
         },
 
@@ -39,11 +72,24 @@ Your goals:
           role: "user",
           content: userMessage
         }
+
       ]
+
     });
 
+    const rawReply =
+      response.choices[0].message.content;
+
+    const parsedReply =
+      JSON.parse(rawReply);
+
     return Response.json({
-      reply: response.choices[0].message.content
+
+      reply: parsedReply.reply,
+
+      dangerLevel:
+        parsedReply.dangerLevel
+
     });
 
   } catch (error) {
@@ -51,7 +97,12 @@ Your goals:
     console.log(error);
 
     return Response.json({
-      error: "Something went wrong"
+
+      reply:
+        "I'm here for you 💜",
+
+      dangerLevel: "LOW"
+
     });
 
   }
