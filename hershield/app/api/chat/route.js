@@ -28,6 +28,10 @@ You help girls experiencing gender-based violence.
 
 Your responsibilities:
 - provide emotional support
+-provide practical advice
+-provide details for NGOs in the user's region
+- provide information about local resources
+-give first aid advice if needed
 - ask calm questions
 - identify danger severity
 - encourage safety
@@ -79,10 +83,11 @@ DO NOT RETURN ANYTHING OUTSIDE JSON.
 
     const rawReply =
       response.choices[0].message.content;
+      const cleanedReply = rawReply.replace(/```json/g, "").replace(/```/g, "").trim();
 
-    const parsedReply =
-      JSON.parse(rawReply);
+    const parsedReply = JSON.parse(cleanedReply);
 
+console.log("RAW REPLY:", rawReply); // 👈 add this
     return Response.json({
 
       reply: parsedReply.reply,
