@@ -956,3 +956,40 @@ input[type="checkbox"] {
   border-color: rgba(239, 68, 68, 0.3);
   color: #f87171;
 }
+/* ── CHARTS ── */
+.chartsSection {
+  padding: 0 2.5rem 1rem;
+}
+
+.chartsTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.chartsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.chartCard {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 1.5rem;
+}
+
+.chartCardWide {
+  grid-column: span 2;
+}
+
+.chartLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 1rem;
+}

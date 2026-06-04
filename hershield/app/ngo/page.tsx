@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Charts from "./components/Charts";
 
 type Ngo = { name: string; phone: string }
 type Alert = { ngo: Ngo }
@@ -67,6 +68,7 @@ if (status === "loading") {
 
       {/* Stats */}
       <div className="dashStats">
+        {cases.length > 0 && <Charts cases={cases} />}
         <div className="statCard">
           <div className="statNumber">{total}</div>
           <div className="statLabel">Total Cases</div>
