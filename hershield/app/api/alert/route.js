@@ -28,8 +28,8 @@ export async function POST(req) {
       take: 2
     })
 
-    console.log("🚨 ALERT SENT for case:", newCase.id)
-    console.log("📱 NGOs to notify:", ngos.map(n => n.name))
+    console.log(" ALERT SENT for case:", newCase.id)
+    console.log("NGOs to notify:", ngos.map(n => n.name))
 
     // Log the alert records
     for (const ngo of ngos) {
