@@ -44,7 +44,7 @@ export default function NgoLogin() {
           <h1>HerShield</h1>
         </div>
 
-        <h2 style={{ marginBottom: "8px" }}>NGO Portal</h2>
+        <h2 style={{ marginBottom: "8px", marginLeft: "130px", fontSize: "1.2rem" }}>NGO Portal</h2>
         <p style={{ fontSize: "14px", opacity: 0.7, marginBottom: "1.5rem" }}>
           Sign in to view and manage incoming cases.
         </p>
