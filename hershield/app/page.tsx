@@ -8,6 +8,7 @@ import { Bot } from "lucide-react";
 import { Shield } from "lucide-react";
 import { Building2 } from "lucide-react";
 
+
 export default function Home() {
  const router = useRouter();
   return (

@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 type Ngo = { name: string; phone: string }
 type Alert = { ngo: Ngo }
@@ -19,6 +21,7 @@ export default function NgoDashboard() {
   const [cases, setCases] = useState<Case[]>([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<Case | null>(null);
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     fetch("/api/cases")
@@ -28,7 +31,17 @@ export default function NgoDashboard() {
         setLoading(false);
       });
   }, []);
+const router = useRouter();
 
+useEffect(() => {
+  if (status === "unauthenticated") {
+    router.push("/ngo/login");
+  }
+}, [status]);
+
+if (status === "loading") {
+  return <div className="loading">Loading...</div>;
+}
   const getBadgeColor = (level: string) => {
     if (level === "HIGH") return "badge-high";
     if (level === "MEDIUM") return "badge-medium";
@@ -45,8 +58,11 @@ export default function NgoDashboard() {
         <div className="dashLogo">🛡️ HerShield</div>
         <div>
           <h1>NGO Dashboard</h1>
-          <p>Incoming GBV case alerts</p>
+          <p>Welcome, {session?.user?.name}</p>
         </div>
+        <button className="signOutBtn" onClick={() => signOut()}>
+          Sign Out
+        </button>
       </header>
 
       {/* Stats */}
