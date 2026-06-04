@@ -122,7 +122,7 @@ if(data.dangerLevel === "HIGH"){
 
       message: currentInput,
 
-      location:"Unknown",
+      location:location,
 
       dangerLevel:data.dangerLevel
 
