@@ -20,12 +20,16 @@ const handler = NextAuth({
           where: { email: credentials.email }
         })
 
+        console.log("🔍 NGO found:", ngo?.name)
+
         if (!ngo) return null
 
         const passwordMatch = await bcrypt.compare(
           credentials.password,
           ngo.password
         )
+
+        console.log("🔐 Password match:", passwordMatch)
 
         if (!passwordMatch) return null
 
