@@ -3,7 +3,7 @@ import { AudioLines } from "lucide-react";
 import { useState } from "react";
 import "../globals.css";
 import { Shield } from "lucide-react";
-
+import { useEffect} from "react"
 export default function ChatPage() {
 
 const startVoiceRecognition = () => {
@@ -38,12 +38,40 @@ const startVoiceRecognition = () => {
 
   const [messages, setMessages] = useState([
     {
-      sender: "ai",
+      sender: "AI",
       text: "Hello 💜 I'm HerShield AI. Are you safe right now?"
     }
   ]);
 
   const [input, setInput] = useState("");
+  const [location, setLocation] = useState("Unknown");
+  useEffect(() => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords
+
+        // Convert coordinates to city name using free API
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+        )
+        const data = await res.json()
+        const city =
+          data.address.city ||
+          data.address.town ||
+          data.address.village ||
+          data.address.county ||
+          "Unknown"
+
+        setLocation(city)
+        console.log("📍 Location detected:", city)
+      },
+      () => {
+        setLocation("Unknown")
+      }
+    )
+  }
+}, [])
 
   const sendMessage = async () => {
 
