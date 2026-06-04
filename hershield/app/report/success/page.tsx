@@ -21,7 +21,7 @@ export default function SuccessPage() {
         </p>
 
         <p style={{ fontSize: "15px", opacity: 0.8, marginBottom: "2rem" }}>
-          You are not alone. Help is on the way. 💜
+          You are not alone. Help is on the way. 
         </p>
 
         <Link href="/">
