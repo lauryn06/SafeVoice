@@ -73,12 +73,13 @@ export default function Home() {
 
             <button className="primaryButton"
            onClick={() => router.push('/report')}>
-              Talk to our AI Assistant
+            File a Report
+              
             </button>
 
             <button className="secondaryButton"
             onClick={() => router.push('/chat')}>
-              File a Report
+            Talk to our AI Assistant
             </button>
 
           </div>
