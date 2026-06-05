@@ -167,22 +167,22 @@ export default function NgoDashboard() {
             </h2>
 
             <div className="modalSection">
-              <div className="modalLabel">📍 Location</div>
+              <div className="modalLabel"> Location</div>
               <div className="modalValue">{selected.region || "Unknown"}</div>
             </div>
 
             <div className="modalSection">
-              <div className="modalLabel">💬 Survivor's Report</div>
+              <div className="modalLabel"> Survivor's Report</div>
               <div className="modalValue">{selected.description}</div>
             </div>
 
             <div className="modalSection">
-              <div className="modalLabel">🤖 AI Case Summary</div>
+              <div className="modalLabel"> AI Case Summary</div>
               <div className="modalValue">{selected.aiSummary}</div>
             </div>
 
             <div className="modalSection">
-              <div className="modalLabel">🤝 NGOs Alerted</div>
+              <div className="modalLabel"> NGOs Alerted</div>
               <div className="ngoTagRow">
                 {selected.ngosAlerted?.map((a, i) => (
                   <span key={i} className="ngoTag">
@@ -193,7 +193,7 @@ export default function NgoDashboard() {
             </div>
 
             <div className="modalSection">
-              <div className="modalLabel">📋 Status</div>
+              <div className="modalLabel"> Status</div>
               <div className="modalValue">{selected.status}</div>
             </div>
           </div>
