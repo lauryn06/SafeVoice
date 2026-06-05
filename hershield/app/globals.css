@@ -1044,3 +1044,161 @@ input[type="checkbox"] {
 .btn-closed:hover:not(:disabled) {
   background: rgba(255,255,255,0.1);
 }
+/* ── RESPONSIVE FIXES ── */
+
+/* Chat page mobile */
+@media (max-width: 768px) {
+  .chatHeader {
+    padding: 14px 16px;
+  }
+
+  .chatHeader h1 {
+    font-size: 1rem;
+  }
+
+  .chatHeader p {
+    font-size: 12px;
+  }
+
+  .messagesContainer {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .aiMessage, .userMessage {
+    max-width: 90%;
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .inputSection {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .inputSection input {
+    padding: 14px;
+    font-size: 14px;
+  }
+
+  .inputSection button {
+    padding: 0 14px;
+    font-size: 13px;
+  }
+
+  /* NGO Dashboard mobile */
+  .dashHeader {
+    padding: 1rem 1.2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .dashHeader h1 {
+    font-size: 16px;
+  }
+
+  .dashStats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 1rem 1.2rem;
+    gap: 0.8rem;
+  }
+
+  .statCard {
+    padding: 1rem;
+  }
+
+  .statNumber {
+    font-size: 26px;
+  }
+
+  .chartsSection {
+    padding: 0 1.2rem 1rem;
+  }
+
+  .chartsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .chartCardWide {
+    grid-column: span 1;
+  }
+
+  .caseGrid {
+    grid-template-columns: 1fr;
+    padding: 0 1.2rem 1rem;
+  }
+
+  .modal {
+    padding: 1.5rem 1rem;
+    max-height: 90vh;
+  }
+
+  .modalTitle {
+    font-size: 16px;
+  }
+
+  /* Landing/card pages mobile */
+  .card {
+    padding: 20px 16px;
+    border-radius: 14px;
+  }
+
+  .card h1 {
+    font-size: 1.4rem;
+  }
+
+  .card h2 {
+    font-size: 1.1rem;
+  }
+
+  .helpBtn {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .input {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* Sign out button */
+  .signOutBtn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  /* Status buttons */
+  .statusBtns {
+    flex-direction: column;
+  }
+
+  .statusBtn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .dashHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .signOutBtn {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .heroTitle {
+    font-size: 2rem;
+  }
+
+  .phoneMockup {
+    height: 480px;
+  }
+
+  .statNumber {
+    font-size: 22px;
+  }
+}
