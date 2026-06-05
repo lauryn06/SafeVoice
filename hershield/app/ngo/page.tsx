@@ -23,6 +23,13 @@ export default function NgoDashboard() {
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<Case | null>(null);
   const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/ngo/login");
+    }
+  }, [status]);
 
   useEffect(() => {
     fetch("/api/cases")
@@ -32,17 +39,11 @@ export default function NgoDashboard() {
         setLoading(false);
       });
   }, []);
-const router = useRouter();
 
-useEffect(() => {
-  if (status === "unauthenticated") {
-    router.push("/ngo/login");
+  if (status === "loading") {
+    return <div className="loading">Loading...</div>;
   }
-}, [status]);
 
-if (status === "loading") {
-  return <div className="loading">Loading...</div>;
-}
   const getBadgeColor = (level: string) => {
     if (level === "HIGH") return "badge-high";
     if (level === "MEDIUM") return "badge-medium";
@@ -52,23 +53,28 @@ if (status === "loading") {
   const total = cases.length;
   const high = cases.filter((c) => c.urgencyLevel === "HIGH").length;
   const alerted = cases.filter((c) => c.status === "ALERTED").length;
+  const pending = cases.filter((c) => c.status === "PENDING").length;
 
   return (
     <main className="dashboard">
+
+      {/* HEADER */}
       <header className="dashHeader">
         <div className="dashLogo">🛡️ HerShield</div>
         <div>
           <h1>NGO Dashboard</h1>
           <p>Welcome, {session?.user?.name}</p>
         </div>
-        <button className="signOutBtn" onClick={() => signOut()}>
+        <button
+          className="signOutBtn"
+          onClick={() => signOut({ callbackUrl: "/ngo/login" })}
+        >
           Sign Out
         </button>
       </header>
 
-      {/* Stats */}
+      {/* STATS */}
       <div className="dashStats">
-        {cases.length > 0 && <Charts cases={cases} />}
         <div className="statCard">
           <div className="statNumber">{total}</div>
           <div className="statLabel">Total Cases</div>
@@ -81,6 +87,18 @@ if (status === "loading") {
           <div className="statNumber">{alerted}</div>
           <div className="statLabel">NGOs Alerted</div>
         </div>
+        <div className="statCard">
+          <div className="statNumber">{pending}</div>
+          <div className="statLabel">Pending</div>
+        </div>
+      </div>
+
+      {/* CHARTS */}
+      {cases.length > 0 && <Charts cases={cases} />}
+
+      {/* CASES */}
+      <div className="casesHeader">
+        <h2 className="casesTitle">Incoming Cases</h2>
       </div>
 
       {loading ? (
@@ -119,7 +137,7 @@ if (status === "loading") {
                 <div className="ngoTagRow">
                   {c.ngosAlerted.map((a, i) => (
                     <span key={i} className="ngoTag">
-                       {a.ngo.name}
+                      🤝 {a.ngo.name}
                     </span>
                   ))}
                 </div>
@@ -129,7 +147,7 @@ if (status === "loading") {
         </div>
       )}
 
-      {/* Case Detail Modal */}
+      {/* MODAL */}
       {selected && (
         <div className="modalOverlay" onClick={() => setSelected(null)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
@@ -149,22 +167,22 @@ if (status === "loading") {
             </h2>
 
             <div className="modalSection">
-              <div className="modalLabel"> Location</div>
+              <div className="modalLabel">📍 Location</div>
               <div className="modalValue">{selected.region || "Unknown"}</div>
             </div>
 
             <div className="modalSection">
-              <div className="modalLabel"> Survivor's Report</div>
+              <div className="modalLabel">💬 Survivor's Report</div>
               <div className="modalValue">{selected.description}</div>
             </div>
 
             <div className="modalSection">
-              <div className="modalLabel"> AI Case Summary for NGO</div>
+              <div className="modalLabel">🤖 AI Case Summary</div>
               <div className="modalValue">{selected.aiSummary}</div>
             </div>
 
             <div className="modalSection">
-              <div className="modalLabel"> NGOs Alerted</div>
+              <div className="modalLabel">🤝 NGOs Alerted</div>
               <div className="ngoTagRow">
                 {selected.ngosAlerted?.map((a, i) => (
                   <span key={i} className="ngoTag">
@@ -175,12 +193,13 @@ if (status === "loading") {
             </div>
 
             <div className="modalSection">
-              <div className="modalLabel"> Status</div>
+              <div className="modalLabel">📋 Status</div>
               <div className="modalValue">{selected.status}</div>
             </div>
           </div>
         </div>
       )}
+
     </main>
   );
 }
