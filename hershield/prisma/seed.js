@@ -17,7 +17,7 @@ async function main() {
     },
     {
       name: "People Opposing Women Abuse",
-      phone: "+27118424345",
+      phone: "+265999000001",
       email: "powa@powa.co.za",
       password,
       region: "South Africa",

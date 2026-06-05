@@ -12,7 +12,7 @@ export async function sendSms(to, message) {
     const result = await sms.send({
       to: [to],
       message,
-      from: process.env.AT_SENDER_ID || null,
+      
     })
 
     console.log("📱 SMS sent:", result)

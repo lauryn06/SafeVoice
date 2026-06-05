@@ -193,9 +193,34 @@ export default function NgoDashboard() {
             </div>
 
             <div className="modalSection">
-              <div className="modalLabel"> Status</div>
-              <div className="modalValue">{selected.status}</div>
-            </div>
+  <div className="modalLabel">📋 Status</div>
+  <div className="modalValue" style={{ marginBottom: "1rem" }}>
+    {selected.status}
+  </div>
+  <div className="statusBtns">
+    <button
+      className="statusBtn btn-progress"
+      onClick={() => updateStatus(selected.id, "IN_PROGRESS")}
+      disabled={selected.status === "IN_PROGRESS"}
+    >
+      🔄 Mark In Progress
+    </button>
+    <button
+      className="statusBtn btn-resolved"
+      onClick={() => updateStatus(selected.id, "RESOLVED")}
+      disabled={selected.status === "RESOLVED"}
+    >
+      ✅ Mark Resolved
+    </button>
+    <button
+      className="statusBtn btn-closed"
+      onClick={() => updateStatus(selected.id, "CLOSED")}
+      disabled={selected.status === "CLOSED"}
+    >
+       Close Case
+    </button>
+  </div>
+</div>
           </div>
         </div>
       )}
