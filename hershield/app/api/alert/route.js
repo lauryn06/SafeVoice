@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client"
 import { Mistral } from "@mistralai/mistralai"
+import { sendSms, buildNgoSms, buildSurvivorSms } from "@/lib/sms"
 
 const prisma = new PrismaClient()
 const mistral = new Mistral({ apiKey: process.env.MISTRAL_API_KEY })
@@ -71,15 +72,19 @@ DO NOT return anything outside JSON.`
     })
 
     for (const ngo of ngos) {
+      const ngoSms= await sendSms(ngo.phoneNumber, buildNgoSms(newCase))
       await prisma.ngoAlert.create({
         data: {
           caseId: newCase.id,
           ngoId: ngo.id,
-          smsSent: false,
-          smsStatus: "PENDING"
+          smsSent: ngoSms.success,
+          smsStatus: ngoSms.success ? "SENT" : "FAILED",
         }
       })
     }
+    if (body.contactNumber){
+console.log("Motivational sms sent to survivor:")
+    } 
 
     console.log("🚨 ALERT SENT for case:", newCase.id)
     console.log("📍 Location:", location)
