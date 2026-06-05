@@ -55,6 +55,30 @@ export default function NgoDashboard() {
   const alerted = cases.filter((c) => c.status === "ALERTED").length;
   const pending = cases.filter((c) => c.status === "PENDING").length;
 
+  const updateStatus = async (caseId: string, status: string) => {
+  try {
+    const res = await fetch("/api/cases/update", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ caseId, status })
+    })
+
+    const data = await res.json()
+
+    if (data.success) {
+      // Update cases list
+      setCases((prev) =>
+        prev.map((c) => c.id === caseId ? { ...c, status } : c)
+      )
+      // Update selected modal
+      setSelected((prev) =>
+        prev ? { ...prev, status } : null
+      )
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
   return (
     <main className="dashboard">
 
