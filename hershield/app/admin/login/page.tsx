@@ -6,12 +6,12 @@ import { useRouter } from "next/navigation"
 
 export default function AdminLoginPage() {
   const router = useRouter()
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
+  const [email, setEmail] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
+  const [error, setError] = useState<string>("")
+  const [loading, setLoading] = useState<boolean>(false)
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setError("")
     setLoading(true)
@@ -118,7 +118,7 @@ export default function AdminLoginPage() {
           <input
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
             required
             style={{
               width: "100%",
@@ -139,7 +139,7 @@ export default function AdminLoginPage() {
           <input
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
             required
             style={{
               width: "100%",
