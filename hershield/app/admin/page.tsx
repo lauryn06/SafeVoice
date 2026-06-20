@@ -4,13 +4,52 @@ import { useEffect, useState } from "react"
 import { signOut } from "next-auth/react"
 import Link from "next/link"
 
-const urgencyColor = {
+interface AbuseTypeCount {
+  type: string
+  count: number
+}
+
+interface RegionCount {
+  region: string
+  count: number
+}
+
+interface NgoAlertInfo {
+  id: string
+  ngo: { name: string }
+}
+
+interface CaseItem {
+  id: string
+  abuseType: string
+  urgencyLevel: string
+  region: string | null
+  description: string
+  aiSummary: string
+  alertSent: boolean
+  createdAt: string
+  ngosAlerted: NgoAlertInfo[]
+}
+
+interface DashboardData {
+  totalCases: number
+  highUrgencyCases: number
+  pendingCases: number
+  totalNgos: number
+  activeNgos: number
+  alertsSent: number
+  casesByAbuseType: AbuseTypeCount[]
+  casesByRegion: RegionCount[]
+  recentCases: CaseItem[]
+}
+
+const urgencyColor: Record<string, string> = {
   HIGH: "#f472b6",
   STANDARD: "#a78bfa",
   LOW: "#6b7280"
 }
 
-function StatCard({ label, value }) {
+function StatCard({ label, value }: { label: string; value: number }) {
   return (
     <div
       style={{
@@ -30,13 +69,13 @@ function StatCard({ label, value }) {
 }
 
 export default function AdminDashboardPage() {
-  const [data, setData] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [data, setData] = useState<DashboardData | null>(null)
+  const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
     fetch("/api/admin/stats")
       .then((res) => res.json())
-      .then((json) => {
+      .then((json: DashboardData) => {
         setData(json)
         setLoading(false)
       })
@@ -152,7 +191,7 @@ export default function AdminDashboardPage() {
               <h3 style={{ color: "#9b9ba8", fontSize: "13px", letterSpacing: "0.06em", marginBottom: "16px" }}>
                 BY ABUSE TYPE
               </h3>
-              {data.casesByAbuseType.map((item) => (
+              {data.casesByAbuseType.map((item: AbuseTypeCount) => (
                 <div key={item.type} style={{ marginBottom: "10px" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", color: "#cfcfd8", fontSize: "13px", marginBottom: "4px" }}>
                     <span>{item.type}</span>
@@ -183,7 +222,7 @@ export default function AdminDashboardPage() {
               <h3 style={{ color: "#9b9ba8", fontSize: "13px", letterSpacing: "0.06em", marginBottom: "16px" }}>
                 BY REGION
               </h3>
-              {data.casesByRegion.map((item) => (
+              {data.casesByRegion.map((item: RegionCount) => (
                 <div key={item.region} style={{ marginBottom: "10px" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", color: "#cfcfd8", fontSize: "13px", marginBottom: "4px" }}>
                     <span>{item.region}</span>
@@ -207,7 +246,7 @@ export default function AdminDashboardPage() {
           {/* Recent cases */}
           <h2 style={{ color: "#fff", fontSize: "18px", marginBottom: "16px" }}>Recent Cases</h2>
           <div style={{ display: "grid", gap: "14px" }}>
-            {data.recentCases.map((c) => (
+            {data.recentCases.map((c: CaseItem) => (
               <div
                 key={c.id}
                 style={{
@@ -261,7 +300,7 @@ export default function AdminDashboardPage() {
                   >
                     {c.alertSent ? "ALERTED" : "NOT ALERTED"}
                   </span>
-                  {c.ngosAlerted.map((alert) => (
+                  {c.ngosAlerted.map((alert: NgoAlertInfo) => (
                     <span
                       key={alert.id}
                       style={{
