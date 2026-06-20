@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/auth-options"
 import { PrismaClient } from "@prisma/client"
 
 const prisma = new PrismaClient()
 
 async function requireAdmin() {
-  const session = await getServerSession()
+  const session = await getServerSession(authOptions)
   if (!session || session.user.role !== "admin") {
     return null
   }
@@ -40,7 +41,6 @@ export async function GET(req) {
   return NextResponse.json({ ngos: formatted })
 }
 
-// Toggle an NGO's active status
 export async function PATCH(req) {
   const session = await requireAdmin()
   if (!session) {

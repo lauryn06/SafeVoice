@@ -1,15 +1,10 @@
-import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { PrismaClient } from "@prisma/client"
 import bcrypt from "bcryptjs"
 
-import { authOptions } from "@/lib/auth-options"
- 
 const prisma = new PrismaClient()
 
-const handler = NextAuth(authOptions)
-export { handler as GET, handler as POST }
-export const authOptions = NextAuth(  {
+export const authOptions = {
   providers: [
     CredentialsProvider({
       id: "ngo",
@@ -18,14 +13,12 @@ export const authOptions = NextAuth(  {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" }
       },
-      async authorize(credentials) {
+      async authorize(credentials: any) {
         if (!credentials?.email || !credentials?.password) return null
 
         const ngo = await prisma.ngo.findUnique({
           where: { email: credentials.email }
         })
-
-        console.log("🔍 NGO found:", ngo?.name)
 
         if (!ngo) return null
 
@@ -33,8 +26,6 @@ export const authOptions = NextAuth(  {
           credentials.password,
           ngo.password
         )
-
-        console.log("🔐 Password match:", passwordMatch)
 
         if (!passwordMatch) return null
 
@@ -54,21 +45,16 @@ export const authOptions = NextAuth(  {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" }
       },
-      async authorize(credentials) {
+      async authorize(credentials: any) {
         if (!credentials?.email || !credentials?.password) return null
 
         const adminEmail = process.env.ADMIN_EMAIL
         const adminPassword = process.env.ADMIN_PASSWORD
 
-        if (!adminEmail || !adminPassword) {
-          console.log("⚠️ ADMIN_EMAIL or ADMIN_PASSWORD not set in .env")
-          return null
-        }
+        if (!adminEmail || !adminPassword) return null
 
         const emailMatch = credentials.email === adminEmail
         const passwordMatch = credentials.password === adminPassword
-
-        console.log("🔐 Admin login attempt match:", emailMatch && passwordMatch)
 
         if (!emailMatch || !passwordMatch) return null
 
@@ -82,7 +68,7 @@ export const authOptions = NextAuth(  {
     })
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user }: any) {
       if (user) {
         token.region = user.region
         token.id = user.id
@@ -90,7 +76,7 @@ export const authOptions = NextAuth(  {
       }
       return token
     },
-    async session({ session, token }) {
+    async session({ session, token }: any) {
       if (token) {
         session.user.region = token.region
         session.user.id = token.id
@@ -103,8 +89,6 @@ export const authOptions = NextAuth(  {
     signIn: "/ngo/login"
   },
   session: {
-    strategy: "jwt"
+    strategy: "jwt" as const
   }
-})
-
-export { handler as GET, handler as POST }
+}

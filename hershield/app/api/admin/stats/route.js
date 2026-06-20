@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
+import { authOptions } from "@/lib/auth-options"
 import { PrismaClient } from "@prisma/client"
 
 const prisma = new PrismaClient()
 
 export async function GET(req) {
-  const session = await getServerSession()
+  const session = await getServerSession(authOptions)
 
   if (!session || session.user.role !== "admin") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
@@ -49,25 +50,6 @@ export async function GET(req) {
     })
   ])
 
-  // 30-day growth: cases created per day for the last 30 days
-  const thirtyDaysAgo = new Date()
-  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
-
-  const recentCasesForGrowth = await prisma.case.findMany({
-    where: { createdAt: { gte: thirtyDaysAgo } },
-    select: { createdAt: true }
-  })
-
-  const growthMap = {}
-  recentCasesForGrowth.forEach((c) => {
-    const day = c.createdAt.toISOString().slice(0, 10)
-    growthMap[day] = (growthMap[day] || 0) + 1
-  })
-
-  const growth = Object.entries(growthMap)
-    .map(([date, count]) => ({ date, count }))
-    .sort((a, b) => (a.date > b.date ? 1 : -1))
-
   return NextResponse.json({
     totalCases,
     totalNgos,
@@ -84,7 +66,6 @@ export async function GET(req) {
       region: c.region || "Unknown",
       count: c._count.region
     })),
-    recentCases,
-    growth
+    recentCases
   })
 }
