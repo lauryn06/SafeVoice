@@ -4,10 +4,20 @@ import { useEffect, useState } from "react"
 import { signOut } from "next-auth/react"
 import Link from "next/link"
 
+interface NgoItem {
+  id: string
+  name: string
+  email: string
+  phone: string
+  region: string
+  isActive: boolean
+  totalAlerts: number
+}
+
 export default function AdminNgosPage() {
-  const [ngos, setNgos] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [updatingId, setUpdatingId] = useState(null)
+  const [ngos, setNgos] = useState<NgoItem[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const [updatingId, setUpdatingId] = useState<string | null>(null)
 
   useEffect(() => {
     loadNgos()
@@ -15,12 +25,12 @@ export default function AdminNgosPage() {
 
   async function loadNgos() {
     const res = await fetch("/api/admin/ngos")
-    const json = await res.json()
+    const json: { ngos: NgoItem[] } = await res.json()
     setNgos(json.ngos || [])
     setLoading(false)
   }
 
-  async function toggleActive(id, current) {
+  async function toggleActive(id: string, current: boolean) {
     setUpdatingId(id)
     await fetch("/api/admin/ngos", {
       method: "PATCH",
