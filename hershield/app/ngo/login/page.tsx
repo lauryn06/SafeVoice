@@ -41,7 +41,7 @@ export default function NgoLogin() {
           <div className="logoCircle">
             <Shield size={28} />
           </div>
-          <h1>HerShield</h1>
+          <h1>SheVoice</h1>
         </div>
 
         <h2 style={{ marginBottom: "8px", marginLeft: "130px", fontSize: "1.2rem" }}>NGO Portal</h2>

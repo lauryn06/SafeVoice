@@ -111,7 +111,7 @@ export default function AdminDashboardPage() {
           </div>
           <div>
             <h1 style={{ color: "#fff", fontSize: "22px", fontWeight: 700, margin: 0 }}>
-              HerShield <span style={{ color: "#c026d3" }}>Admin</span>
+              SheVoice <span style={{ color: "#c026d3" }}>Admin</span>
             </h1>
             <p style={{ color: "#9b9ba8", fontSize: "13px", margin: 0 }}>
               Platform overview and case management

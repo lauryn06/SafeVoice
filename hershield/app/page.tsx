@@ -7,6 +7,7 @@ import { Router } from "next/router";
 import { Bot } from "lucide-react";
 import { Shield } from "lucide-react";
 import { Building2 } from "lucide-react";
+import { signOut } from "next-auth/react";
 
 
 export default function Home() {
@@ -30,11 +31,12 @@ export default function Home() {
             <Shield size={28} />
           </div>
 
-          <h2>HerShield </h2>
+          <h2>SheVoice </h2>
 
         </div>
 
-        <button className="navButton">
+        <button className="navButton"
+          onClick={() => router.push('/')}>
           Safe Exit
         </button>
 
@@ -142,7 +144,17 @@ export default function Home() {
         <p>
           Anonymous • Secure • AI Powered • Connected To Trusted NGOs
         </p>
+<p>  <div className="featureCard">
+              <Mic size={18} /> Voice Reporting
+            </div>
 
+            <div className="featureCard">
+              <Bot size={18} /> AI Risk Detection
+            </div>
+
+            <div className="featureCard">
+              <Building2 size={18} /> NGO Alerts
+            </div> </p>
       </footer>
 
     </main>

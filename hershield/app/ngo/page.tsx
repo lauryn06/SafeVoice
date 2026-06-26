@@ -84,7 +84,7 @@ export default function NgoDashboard() {
 
       {/* HEADER */}
       <header className="dashHeader">
-        <div className="dashLogo">🛡️ HerShield</div>
+        <div className="dashLogo">🛡️ SheVoice</div>
         <div>
           <h1>NGO Dashboard</h1>
           <p>Welcome, {session?.user?.name}</p>

@@ -58,7 +58,7 @@ export default function ReportFormPage() {
           <div className="logoCircle">
             <Shield size={28} />
           </div>
-          <h1>HerShield</h1>
+          <h1>SheVoice</h1>
         </div>
 
         <div className="logo">

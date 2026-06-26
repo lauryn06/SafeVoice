@@ -69,7 +69,7 @@ export default function AdminLoginPage() {
             🛡️
           </div>
           <h1 style={{ color: "#fff", fontSize: "28px", fontWeight: 700, margin: 0 }}>
-            HerShield
+            SheVoice
           </h1>
         </div>
 

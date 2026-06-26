@@ -4,6 +4,7 @@ import { useState } from "react";
 import "../globals.css";
 import { Shield } from "lucide-react";
 import { useEffect} from "react"
+import path from "path";
 export default function ChatPage() {
 
 const startVoiceRecognition = () => {
@@ -160,7 +161,7 @@ if(data.dangerLevel === "HIGH"){
             <Shield size={28} />
 
         </div>
-          <h1>HerShield AI</h1>
+          <h1>SheVoice AI</h1>
         
         </div>
 
