@@ -11,6 +11,9 @@ import { signOut } from "next-auth/react";
 
 
 export default function Home() {
+   const handleSafeExit = () => {
+  window.location.replace("https://www.google.com");
+};
  const router = useRouter();
   return (
 
@@ -36,7 +39,7 @@ export default function Home() {
         </div>
 
         <button className="navButton"
-          onClick={() => router.push('/')}>
+          onClick={handleSafeExit}>
           Safe Exit
         </button>
 

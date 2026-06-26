@@ -1,12 +1,15 @@
 "use client";
-import { AudioLines } from "lucide-react";
+import { AudioLines, Hand } from "lucide-react";
 import { useState } from "react";
 import "../globals.css";
 import { Shield } from "lucide-react";
 import { useEffect} from "react"
 import path from "path";
-export default function ChatPage() {
 
+export default function ChatPage() {
+ const handleSafeExit = () => {
+  window.location.replace("https://www.google.com");
+};
 const startVoiceRecognition = () => {
 
   const SpeechRecognition =
@@ -19,6 +22,7 @@ const startVoiceRecognition = () => {
 
     return;
   }
+ 
 
   const recognition = new SpeechRecognition();
 
@@ -40,7 +44,7 @@ const startVoiceRecognition = () => {
   const [messages, setMessages] = useState([
     {
       sender: "AI",
-      text: "Hello 💜 I'm HerShield AI. Are you safe right now?"
+      text: "Hello 💜 I'm SheVoice AI. Are you safe right now?"
     }
   ]);
 
@@ -165,7 +169,8 @@ if(data.dangerLevel === "HIGH"){
         
         </div>
 
-        <button className="safeExit">
+        <button className="safeExit"
+        onClick={handleSafeExit}>
           Safe Exit
         </button>
 
