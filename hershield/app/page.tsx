@@ -140,21 +140,21 @@ export default function Home() {
       {/* FOOTER */}
 
       <footer className="footer">
-
+<br></br>
         <p>
           Anonymous • Secure • AI Powered • Connected To Trusted NGOs
-        </p>
+        </p><br></br>
 <p>  <div className="featureCard">
               <Mic size={18} /> Voice Reporting
             </div>
-
+<br></br>
             <div className="featureCard">
               <Bot size={18} /> AI Risk Detection
             </div>
-
+<br></br>
             <div className="featureCard">
               <Building2 size={18} /> NGO Alerts
-            </div> </p>
+            </div> <br></br></p>
       </footer>
 
     </main>

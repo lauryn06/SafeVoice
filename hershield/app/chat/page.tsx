@@ -151,7 +151,7 @@ if(data.dangerLevel === "HIGH"){
   return (
 
     <main className="chatPage">
-
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
       {/* HEADER */}
 
       <header className="chatHeader">
