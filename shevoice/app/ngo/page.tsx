@@ -1,0 +1,254 @@
+"use client";
+import { useEffect, useState } from "react";
+import { useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import Charts from "./components/Charts";
+
+type Ngo = { name: string; phone: string }
+type Alert = { ngo: Ngo }
+type Case = {
+  id: string;
+  createdAt: string;
+  urgencyLevel: string;
+  region: string;
+  status: string;
+  aiSummary: string;
+  abuseType: string;
+  description: string;
+  ngosAlerted: Alert[];
+};
+
+export default function NgoDashboard() {
+  const [cases, setCases] = useState<Case[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selected, setSelected] = useState<Case | null>(null);
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/ngo/login");
+    }
+  }, [status]);
+
+  useEffect(() => {
+    fetch("/api/cases")
+      .then((res) => res.json())
+      .then((data) => {
+        setCases(data);
+        setLoading(false);
+      });
+  }, []);
+
+  if (status === "loading") {
+    return <div className="loading">Loading...</div>;
+  }
+
+  const getBadgeColor = (level: string) => {
+    if (level === "HIGH") return "badge-high";
+    if (level === "MEDIUM") return "badge-medium";
+    return "badge-low";
+  };
+
+  const total = cases.length;
+  const high = cases.filter((c) => c.urgencyLevel === "HIGH").length;
+  const alerted = cases.filter((c) => c.status === "ALERTED").length;
+  const pending = cases.filter((c) => c.status === "PENDING").length;
+
+  const updateStatus = async (caseId: string, status: string) => {
+  try {
+    const res = await fetch("/api/cases/update", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ caseId, status })
+    })
+
+    const data = await res.json()
+
+    if (data.success) {
+      // Update cases list
+      setCases((prev) =>
+        prev.map((c) => c.id === caseId ? { ...c, status } : c)
+      )
+      // Update selected modal
+      setSelected((prev) =>
+        prev ? { ...prev, status } : null
+      )
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
+  return (
+    <main className="dashboard">
+
+      {/* HEADER */}
+      <header className="dashHeader">
+        <div className="dashLogo">🛡️ SheVoice</div>
+        <div>
+          <h1>NGO Dashboard</h1>
+          <p>Welcome, {session?.user?.name}</p>
+        </div>
+        <button
+          className="signOutBtn"
+          onClick={() => signOut({ callbackUrl: "/ngo/login" })}
+        >
+          Sign Out
+        </button>
+      </header>
+
+      {/* STATS */}
+      <div className="dashStats">
+        <div className="statCard">
+          <div className="statNumber">{total}</div>
+          <div className="statLabel">Total Cases</div>
+        </div>
+        <div className="statCard">
+          <div className="statNumber">{high}</div>
+          <div className="statLabel">High Urgency</div>
+        </div>
+        <div className="statCard">
+          <div className="statNumber">{alerted}</div>
+          <div className="statLabel">NGOs Alerted</div>
+        </div>
+        <div className="statCard">
+          <div className="statNumber">{pending}</div>
+          <div className="statLabel">Pending</div>
+        </div>
+      </div>
+
+      {/* CHARTS */}
+      {cases.length > 0 && <Charts cases={cases} />}
+
+      {/* CASES */}
+      <div className="casesHeader">
+        <h2 className="casesTitle">Incoming Cases</h2>
+      </div>
+
+      {loading ? (
+        <p className="loading">Loading cases...</p>
+      ) : cases.length === 0 ? (
+        <p className="loading">No cases yet.</p>
+      ) : (
+        <div className="caseGrid">
+          {cases.map((c) => (
+            <div
+              key={c.id}
+              className="caseCard"
+              onClick={() => setSelected(c)}
+            >
+              <div className="caseTop">
+                <span className={`badge ${getBadgeColor(c.urgencyLevel)}`}>
+                  {c.urgencyLevel}
+                </span>
+                <span className="caseDate">
+                  {new Date(c.createdAt).toLocaleDateString()}
+                </span>
+              </div>
+
+              <div className="caseType">
+                {c.abuseType?.toUpperCase()} ABUSE
+              </div>
+
+              <p className="caseSummary">{c.aiSummary}</p>
+
+              <div className="caseBottom">
+                <span className="caseRegion">📍 {c.region || "Unknown"}</span>
+                <span className="caseStatus">{c.status}</span>
+              </div>
+
+              {c.ngosAlerted?.length > 0 && (
+                <div className="ngoTagRow">
+                  {c.ngosAlerted.map((a, i) => (
+                    <span key={i} className="ngoTag">
+                      🤝 {a.ngo.name}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* MODAL */}
+      {selected && (
+        <div className="modalOverlay" onClick={() => setSelected(null)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <button className="modalClose" onClick={() => setSelected(null)}>✕</button>
+
+            <div className="modalHeader">
+              <span className={`badge ${getBadgeColor(selected.urgencyLevel)}`}>
+                {selected.urgencyLevel}
+              </span>
+              <span className="caseDate">
+                {new Date(selected.createdAt).toLocaleString()}
+              </span>
+            </div>
+
+            <h2 className="modalTitle">
+              {selected.abuseType?.toUpperCase()} ABUSE
+            </h2>
+
+            <div className="modalSection">
+              <div className="modalLabel"> Location</div>
+              <div className="modalValue">{selected.region || "Unknown"}</div>
+            </div>
+
+            <div className="modalSection">
+              <div className="modalLabel"> Survivor's Report</div>
+              <div className="modalValue">{selected.description}</div>
+            </div>
+
+            <div className="modalSection">
+              <div className="modalLabel"> AI Case Summary</div>
+              <div className="modalValue">{selected.aiSummary}</div>
+            </div>
+
+            <div className="modalSection">
+              <div className="modalLabel"> NGOs Alerted</div>
+              <div className="ngoTagRow">
+                {selected.ngosAlerted?.map((a, i) => (
+                  <span key={i} className="ngoTag">
+                    {a.ngo.name} — {a.ngo.phone}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="modalSection">
+  <div className="modalLabel">📋 Status</div>
+  <div className="modalValue" style={{ marginBottom: "1rem" }}>
+    {selected.status}
+  </div>
+  <div className="statusBtns">
+    <button
+      className="statusBtn btn-progress"
+      onClick={() => updateStatus(selected.id, "IN_PROGRESS")}
+      disabled={selected.status === "IN_PROGRESS"}
+    >
+      🔄 Mark In Progress
+    </button>
+    <button
+      className="statusBtn btn-resolved"
+      onClick={() => updateStatus(selected.id, "RESOLVED")}
+      disabled={selected.status === "RESOLVED"}
+    >
+      ✅ Mark Resolved
+    </button>
+    <button
+      className="statusBtn btn-closed"
+      onClick={() => updateStatus(selected.id, "CLOSED")}
+      disabled={selected.status === "CLOSED"}
+    >
+       Close Case
+    </button>
+  </div>
+</div>
+          </div>
+        </div>
+      )}
+
+    </main>
+  );
+}
