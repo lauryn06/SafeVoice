@@ -1,5 +1,6 @@
 "use client";
 import "./globals.css";
+import { useEffect, useState } from "react";
 import { Mic, Bot, Shield, Building2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -9,6 +10,26 @@ export default function Home() {
   const handleSafeExit = () => {
     window.location.replace("https://www.google.com");
   };
+  const encouragements = [
+  "You are not alone",
+  "Your voice matters",
+  "You are stronger than you know",
+  "Healing takes time, and that's okay",
+  "You deserve safety",
+  "Your feelings are valid",
+  "Help is here for you",
+  "You are brave for reaching out",
+  "You matter",
+  "There is support waiting for you",
+];
+const [wordIndex, setWordIndex] = useState(0);
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    setWordIndex((prev) => (prev + 1) % encouragements.length);
+  }, 4000); 
+  return () => clearInterval(interval);
+}, []);
 
   return (
     <main className="landingPage">
@@ -73,6 +94,12 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* ENCOURAGEMENT BANNER */}
+<div className="encourageBanner">
+  <span className="encourageWord" key={wordIndex}>
+    {encouragements[wordIndex]}
+  </span>
+</div>
 
       {/* PHASE 1 — now its own section, not a hero flex child */}
       <section className="phase1Section">
@@ -81,6 +108,14 @@ export default function Home() {
         </p>
         <img src="/gbv3.jpg" alt="People supporting each other" className="image1" />
       </section>
+
+ {/* ENCOURAGEMENT BANNER */}
+<div className="encourageBanner">
+  <span className="encourageWord" key={wordIndex}>
+    {encouragements[wordIndex]}
+  </span>
+</div>
+
  <h1>Talk to Others</h1>
       <section className="gallery">
        

@@ -282,7 +282,7 @@ body{
   flex-wrap:wrap;
   justify-content:center;
   
- 
+  
 }
 .gallery img{
   width:500px;
@@ -320,6 +320,53 @@ body{
 
   margin:auto;
   margin-bottom:25px;
+}
+.encourageBanner{
+  position:relative;
+  z-index:2;
+  height:70px;
+  overflow:hidden;
+  margin:20px 0;
+  display:flex;
+  align-items:center;
+  background:rgba(255,255,255,0.03);
+  border-top:1px solid rgba(255,255,255,0.08);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.encourageWord{
+  position:absolute;
+  white-space:nowrap;
+  font-size:1.6rem;
+  font-weight:700;
+  background:linear-gradient(135deg,#ff4fa3,#7c3aed);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:slideAcross 4s linear forwards;
+}
+
+@keyframes slideAcross{
+  0%{
+    transform:translateX(100vw);
+    opacity:0;
+  }
+  10%{
+    opacity:1;
+  }
+  90%{
+    opacity:1;
+  }
+  100%{
+    transform:translateX(-110%);
+    opacity:0;
+  }
+}
+
+@media(max-width:600px){
+  .encourageWord{
+    font-size:1.15rem;
+  }
 }
 
 /* CHAT SCREEN */
