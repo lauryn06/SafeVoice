@@ -140,9 +140,18 @@ useEffect(() => {
             <div className="featureCard">
               <Building2 size={18} /> NGO Alerts
             </div> <br></br></p>
-      </footer>
+            
+            <button className="primaryButton" onClick={() => router.push('/report')}>
+              File a Report
+            </button>
+            <button className="secondaryButton" onClick={() => router.push('/chat')}>
+              Talk to our AI Assistant
+            </button>
+        
             <p>Anonymous • Secure • AI Powered • Connected To Trusted NGOs</p>
-    </main>
+   
+      </footer>
+       </main>
     
   );
 }
