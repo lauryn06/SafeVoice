@@ -19,7 +19,7 @@ export async function GET(req) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 
-  const ngos = await prisma.ngo.findMany({
+  const ngos =  prisma.ngo.findMany({
     orderBy: { name: "asc" },
     include: {
       _count: {

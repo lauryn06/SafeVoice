@@ -72,7 +72,7 @@ DO NOT return anything outside JSON.`
     })
 
     for (const ngo of ngos) {
-      const ngoSms= await sendSms(ngo.phoneNumber, buildNgoSms(newCase))
+      const ngoSms= await sendSms(ngo.phone, buildNgoSms(newCase))
       await prisma.ngoAlert.create({
         data: {
           caseId: newCase.id,

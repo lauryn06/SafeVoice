@@ -23,7 +23,7 @@ export async function GET(req) {
     casesByAbuseType,
     casesByRegion,
     recentCases
-  ] = await Promise.all([
+  ] =  Promise.all([
     prisma.case.count(),
     prisma.ngo.count(),
     prisma.ngo.count({ where: { isActive: true } }),

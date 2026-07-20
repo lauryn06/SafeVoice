@@ -18,10 +18,7 @@ body{
   position:relative;
   overflow:hidden;
   padding:30px 7%;
-  background:
-  radial-gradient(circle at top left,#6d28d955,transparent 30%),
-  radial-gradient(circle at bottom right,#ff4fa344,transparent 30%),
-  #070710;
+  background: #070710;
 }
 
 /* GLOW EFFECTS */
