@@ -19,7 +19,7 @@ export async function POST(req: Request) {
 
     // ── STEP 0: Main menu ──
     if (text === "") {
-      response = `CON Welcome to HerShield 🛡️
+      response = `CON Welcome to SheVoice 🛡️
 Report Gender-Based Violence safely.
 
 Select type of abuse:
@@ -114,7 +114,7 @@ Do you want to share your phone number so they can call you back?
         }
       })
 
-      response = `END Thank you for reaching out. 💜
+      response = `END Thank you for reaching out. 
 
 Your report has been received.
 ${shareNumber ? "An organisation will call you shortly." : "Help is being arranged anonymously."}
