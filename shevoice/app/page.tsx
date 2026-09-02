@@ -129,7 +129,7 @@ useEffect(() => {
       <footer className="footer">
 <br></br>
         
-<p>  <div className="featureCard">
+<div> <div className="featureCard">
               <Mic size={18} /> Voice Reporting
             </div>
 <br></br>
@@ -139,7 +139,7 @@ useEffect(() => {
 <br></br>
             <div className="featureCard">
               <Building2 size={18} /> NGO Alerts
-            </div> <br></br></p>
+            </div> <br></br></div>
             
             <button className="primaryButton" onClick={() => router.push('/report')}>
               File a Report
