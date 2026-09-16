@@ -20,10 +20,10 @@ export default function NgoLogin() {
     setLoading(true);
     setError("");
 
-    const result = await signIn("credentials", {
+    const result = await signIn("ngo", {
       email,
       password,
-      redirect: true,
+      redirect: false,
     });
 
     if (result?.error) {
