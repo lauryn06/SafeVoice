@@ -1,13 +1,14 @@
-const { PrismaClient } = require("@prisma/client")
-const bcrypt = require("bcryptjs")
+```js
+const { PrismaClient } = require("@prisma/client");
+const bcrypt = require("bcryptjs");
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 async function main() {
-  const password = await bcrypt.hash("hershield123", 10)
+  const password = await bcrypt.hash("hershield123", 10);
 
   const ngos = [
-    // 🇿🇦 South Africa
+    // South Africa
     {
       name: "Rape Crisis Cape Town",
       phone: "+27214476130",
@@ -17,7 +18,7 @@ async function main() {
     },
     {
       name: "People Opposing Women Abuse",
-      phone: "+265999000001",
+      phone: "+27116420000",
       email: "powa@powa.co.za",
       password,
       region: "South Africa",
@@ -29,7 +30,8 @@ async function main() {
       password,
       region: "South Africa",
     },
-    // 🇳🇬 Nigeria
+
+    // Nigeria
     {
       name: "WOTCLEF Nigeria",
       phone: "+2348033000000",
@@ -37,7 +39,8 @@ async function main() {
       password,
       region: "Nigeria",
     },
-    // 🇰🇪 Kenya
+
+    // Kenya
     {
       name: "FIDA Kenya",
       phone: "+254202719819",
@@ -45,7 +48,8 @@ async function main() {
       password,
       region: "Kenya",
     },
-    // 🇲🇼 Malawi
+
+    // Malawi
     {
       name: "Women and Children First Malawi",
       phone: "+2651758090",
@@ -81,19 +85,31 @@ async function main() {
       password,
       region: "Malawi",
     },
-  ]
+  ];
+
+  // Remove existing NGOs so the seed can be run again safely
+  await prisma.ngo.deleteMany();
 
   for (const ngo of ngos) {
-    await prisma.ngo.create({ data: ngo })
+    await prisma.ngo.create({
+      data: ngo,
+    });
   }
 
-  console.log("✅ NGOs seeded with passwords!")
-  console.log(`🇿🇦 South Africa: 3 orgs`)
-  console.log(`🇳🇬 Nigeria: 1 org`)
-  console.log(`🇰🇪 Kenya: 1 org`)
-  console.log(`🇲🇼 Malawi: 5 orgs`)
+  console.log("NGOs seeded successfully!");
+  console.log("Password for all NGOs: hershield123");
+  console.log("South Africa: 3 orgs");
+  console.log("Nigeria: 1 org");
+  console.log("Kenya: 1 org");
+  console.log("Malawi: 5 orgs");
 }
 
 main()
-  .catch(console.error)
-  .finally(() => prisma.$disconnect())
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
+```
