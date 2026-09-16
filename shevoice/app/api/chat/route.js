@@ -1,26 +1,19 @@
-import { Mistral } from "@mistralai/mistralai";
+import Groq from "groq-sdk";
 
-const client = new Mistral({
-  apiKey: process.env.MISTRAL_API_KEY,
+const client = new Groq({
+  apiKey: process.env.GROQ_API_KEY,
 });
 
 export async function POST(req) {
-
   try {
-
     const body = await req.json();
-
     const userMessage = body.message;
 
-    const response = await client.chat.complete({
-
-      model: "mistral-small-latest",
-
+    const response = await client.chat.completions.create({
+      model: "openai/gpt-oss-120b",
       messages: [
-
         {
           role: "system",
-
           content: `
 You are HerShield AI.
 
@@ -71,45 +64,26 @@ LOW examples:
 DO NOT RETURN ANYTHING OUTSIDE JSON.
           `
         },
-
         {
           role: "user",
           content: userMessage
         }
-
       ]
-
     });
 
-    const rawReply =
-      response.choices[0].message.content;
-      const cleanedReply = rawReply.replace(/```json/g, "").replace(/```/g, "").trim();
-
+    const rawReply = response.choices[0].message.content;
+    const cleanedReply = rawReply.replace(/```json/g, "").replace(/```/g, "").trim();
     const parsedReply = JSON.parse(cleanedReply);
 
-console.log("RAW REPLY:", rawReply); // 👈 add this
     return Response.json({
-
       reply: parsedReply.reply,
-
-      dangerLevel:
-        parsedReply.dangerLevel
-
+      dangerLevel: parsedReply.dangerLevel
     });
-
   } catch (error) {
-
     console.log(error);
-
     return Response.json({
-
-      reply:
-        "I'm here for you 💜",
-
+      reply: "I'm here for you 💜",
       dangerLevel: "LOW"
-
     });
-
   }
-
 }
