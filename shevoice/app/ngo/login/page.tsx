@@ -23,7 +23,7 @@ export default function NgoLogin() {
     const result = await signIn("credentials", {
       email,
       password,
-      redirect: false,
+      redirect: true,
     });
 
     if (result?.error) {
