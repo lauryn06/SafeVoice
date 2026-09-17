@@ -70,6 +70,27 @@ DO NOT RETURN ANYTHING OUTSIDE JSON.
         }
       ]
     });
+    const adviceResponse = await groq.chat.completions.create({
+  model: "openai/gpt-oss-120b",
+  messages: [
+    {
+      role: "system",
+      content: `You are a GBV case advisor for Malawi. Assess this incident report and return JSON only:
+{
+  "urgencyLevel": "HIGH | MEDIUM | LOW",
+  "ngoAdvice": "Professional advice for the NGO caseworker in 2-3 sentences",
+  "recommendedActions": ["action 1", "action 2", "action 3"],
+  "normalizedRegion": "the closest matching Malawi district or city name, properly capitalized (e.g. Blantyre, Mzuzu, Lilongwe, Zomba). If no location is mentioned or identifiable, return 'Not specified'."
+}
+Use the raw location text AND the incident description to infer the region if needed.
+DO NOT return anything outside JSON.`
+    },
+    {
+      role: "user",
+      content: `Raw location text: ${location || "none provided"}. Incident type: ${incidentType}. Description: ${description}`
+    }
+  ]
+})
 
     const rawReply = response.choices[0].message.content;
     const cleanedReply = rawReply.replace(/```json/g, "").replace(/```/g, "").trim();
