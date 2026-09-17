@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { AlertTriangle, Shield } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -50,6 +50,34 @@ export default function ReportFormPage() {
       setLoading(false);
     }
   };
+  useEffect(() => {
+  if (!navigator.geolocation) return;
+
+  navigator.geolocation.getCurrentPosition(
+    async (position) => {
+      const { latitude, longitude } = position.coords;
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+        );
+        const data = await res.json();
+        const address = data.address || {};
+        const detectedRegion =
+          address.city || address.town || address.county || address.state || "";
+
+        if (detectedRegion) {
+          setLocation(detectedRegion);
+        }
+      } catch (err) {
+        console.error("Reverse geocode failed:", err);
+      }
+    },
+    (error) => {
+      console.warn("Geolocation permission denied or unavailable:", error);
+      // silently falls back to manual typing — no need to alert the user
+    }
+  );
+}, []);
 
   return (
     <div className="landing">
