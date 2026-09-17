@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client"
-import { Mistral } from "@mistralai/mistralai"
+import Groq from "groq-sdk";
 import { sendSms, buildNgoSms, buildSurvivorSms } from "@/lib/sms"
 
 const prisma = new PrismaClient()
-const mistral = new Mistral({ apiKey: process.env.MISTRAL_API_KEY })
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
 
 export async function POST(req) {
   try {
@@ -11,8 +11,8 @@ export async function POST(req) {
     const { incidentType, date, location, description, anonymous, contact } = body
 
     // Ask Mistral to assess the report
-    const adviceResponse = await mistral.chat.complete({
-      model: "mistral-small-latest",
+    const adviceResponse = await groq.chat.completions.create({
+      model: "openai/gpt-oss-120b",
       messages: [
         {
           role: "system",
