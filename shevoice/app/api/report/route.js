@@ -20,8 +20,10 @@ export async function POST(req) {
 {
   "urgencyLevel": "HIGH | MEDIUM | LOW",
   "ngoAdvice": "Professional advice for the NGO caseworker in 2-3 sentences",
-  "recommendedActions": ["action 1", "action 2", "action 3"]
+  "recommendedActions": ["action 1", "action 2", "action 3"],
+  "normalizedRegion": "the closest matching Malawi district or city name, properly capitalized (e.g. Blantyre, Mzuzu, Lilongwe, Zomba). If no location is mentioned or identifiable, return 'Not specified'."
 }
+  Use the raw location text AND the incident description to infer the region if needed.
 DO NOT return anything outside JSON.`
         },
         {
@@ -39,7 +41,8 @@ DO NOT return anything outside JSON.`
     let advice = {
       urgencyLevel: "MEDIUM",
       ngoAdvice: "Please review this case carefully.",
-      recommendedActions: []
+      recommendedActions: [],
+      normalizedRegion: location || "Not specified"
     }
 
     try { advice = JSON.parse(raw) } catch (e) {}
@@ -51,7 +54,7 @@ DO NOT return anything outside JSON.`
         description: description,
         aiSummary: advice.ngoAdvice,
         urgencyLevel: advice.urgencyLevel,
-        region: location || "Not specified",
+        region: advice.normalizedRegion,
         isAnonymous: anonymous,
         contactNumber: contact || null,
         alertSent: true,
